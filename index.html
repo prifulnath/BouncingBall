@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .divBounceBar {
+            width: 10%;
+            height: 10px;
+            background-color: aquamarine;
+            bottom: 20px;
+            right: 45%;
+            left: 45%;
+            position: absolute;
+        }
+
+        .divBounceBall {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: aliceblue;
+        }
+    </style>
+    <script>
+        document.addEventListener(
+            "keydown",
+            function (event) {
+                var step = 20;
+                var bouncerBar = document.getElementById("divBarSelector");
+                var leftValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("left").replace("px", ""));
+                var rightValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("right").replace("px", ""));
+                // var screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+                if ("ArrowRight" == event.key) {
+                    if (rightValue - step > 0) {
+                        leftValue = leftValue + step;
+                        rightValue = rightValue - step;
+                    }
+                } else if ("ArrowLeft" == event.key) {
+                    if (leftValue - step > 0) {
+                        leftValue = leftValue - step;
+                        rightValue = rightValue + step;
+                    }
+                }
+                bouncerBar.style.left = leftValue + 'px';
+                bouncerBar.style.right = rightValue + 'px';
+            },
+        );
+    </script>
+</head>
+
+<body>
+    <div id="divBallSelector" class="divBounceBall"></div>
+    <div id="divBarSelector" class="divBounceBar"></div>
+</body>
+
+</html>
