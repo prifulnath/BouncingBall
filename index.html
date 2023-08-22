@@ -66,6 +66,7 @@
             var leftBarValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("left").replace("px", ""));
             var rightBarValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("right").replace("px", ""));
             var ballVerticalStep = 1;
+            var ballHorizondalStep = getRandomNumber("any");
 
 
             var interval = setInterval(function () {
@@ -75,8 +76,13 @@
 
                 topBallValue = topBallValue + ballVerticalStep;
                 bottomBallValue = bottomBallValue - ballVerticalStep;
+                rightBallValue = rightBallValue + ballHorizondalStep;
+                leftBallValue = leftBallValue - ballHorizondalStep;
+
                 bouncerBall.style.bottom = bottomBallValue + 'px';
                 bouncerBall.style.top = topBallValue + 'px';
+                bouncerBall.style.left = leftBallValue + 'px';
+                bouncerBall.style.right = rightBallValue + 'px';
                 if (
                     bottomBallValue > 30
                     && bottomBallValue < 40
@@ -90,11 +96,32 @@
                 if (topBallValue <= 1) {
                     ballVerticalStep = 1;
                 }
-                if (bottomBallValue < 25 || topBallValue <= 0) {
+                if (leftBallValue <= 1) {
+                    ballHorizondalStep = getRandomNumber("negative");
+                }
+                if (rightBallValue <= 10) {
+                    ballHorizondalStep = getRandomNumber("negative");
+                }
+                if (bottomBallValue < 25
+                    || topBallValue <= 0
+                    || leftBallValue <= 0
+                    || rightBallValue <= 0
+                ) {
                     clearInterval(interval);
                 }
-            }, 5);
+            }, 10);
         }, false);
+
+        function getRandomNumber(direction) {
+            const step = [-1, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 1];
+            if ("positive" == direction) {
+                const step = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+            } else if ("negative" == direction) {
+                const step = [-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9, -1];
+            }
+            const random = Math.floor(Math.random() * step.length);
+            return step[random];
+        }
     </script>
 </head>
 
