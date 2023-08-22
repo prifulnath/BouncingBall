@@ -22,6 +22,11 @@
             height: 15px;
             border-radius: 50%;
             background-color: aliceblue;
+            bottom: 50%;
+            top: 50%;
+            right: 50%;
+            left: 50%;
+            position: absolute;
         }
     </style>
     <script>
@@ -32,7 +37,6 @@
                 var bouncerBar = document.getElementById("divBarSelector");
                 var leftValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("left").replace("px", ""));
                 var rightValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("right").replace("px", ""));
-                // var screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
                 if ("ArrowRight" == event.key) {
                     if (rightValue - step > 0) {
@@ -49,6 +53,48 @@
                 bouncerBar.style.right = rightValue + 'px';
             },
         );
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var bouncerBall = document.getElementById("divBallSelector");
+            var leftBallValue = parseFloat(window.getComputedStyle(bouncerBall, null).getPropertyValue("left").replace("px", ""));
+            var rightBallValue = parseFloat(window.getComputedStyle(bouncerBall, null).getPropertyValue("right").replace("px", ""));
+            var topBallValue = parseFloat(window.getComputedStyle(bouncerBall, null).getPropertyValue("top").replace("px", ""));
+            var bottomBallValue = parseFloat(window.getComputedStyle(bouncerBall, null).getPropertyValue("bottom").replace("px", ""));
+
+
+            var bouncerBar = document.getElementById("divBarSelector");
+            var leftBarValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("left").replace("px", ""));
+            var rightBarValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("right").replace("px", ""));
+            var ballVerticalStep = 1;
+
+
+            var interval = setInterval(function () {
+
+                leftBarValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("left").replace("px", ""));
+                rightBarValue = parseFloat(window.getComputedStyle(bouncerBar, null).getPropertyValue("right").replace("px", ""));
+
+                topBallValue = topBallValue + ballVerticalStep;
+                bottomBallValue = bottomBallValue - ballVerticalStep;
+                bouncerBall.style.bottom = bottomBallValue + 'px';
+                bouncerBall.style.top = topBallValue + 'px';
+                if (
+                    bottomBallValue > 30
+                    && bottomBallValue < 40
+                    && leftBarValue < leftBallValue
+                    && rightBarValue < rightBallValue
+                ) {
+                    ballVerticalStep = -1;
+                } else {
+                    // console.log('haha outside');
+                }
+                if (topBallValue <= 1) {
+                    ballVerticalStep = 1;
+                }
+                if (bottomBallValue < 25 || topBallValue <= 0) {
+                    clearInterval(interval);
+                }
+            }, 5);
+        }, false);
     </script>
 </head>
 
